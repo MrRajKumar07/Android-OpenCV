@@ -25,6 +25,30 @@ This project demonstrates:
 * Bonus: Toggle button (raw / processed) and FPS counter (optional)
 
 ---
+🧩 Folder Structure
+```
+edge_assessment/
+├── app/
+│   ├── src/main/java/com/example/edgeviewer/
+│   │   └── MainActivity.java
+│   └── res/layout/
+│       └── activity_main.xml
+│
+├── jni/
+│   ├── CMakeLists.txt
+│   └── native-lib.cpp
+│
+├── gl/
+│   └── GLRenderer.java
+│
+├── web/
+│   ├── index.html
+│   ├── main.ts
+│   ├── tsconfig.json
+│   └── processed_sample.png
+│
+└── README.md
+```
 
 ## Quick Architecture Explanation
 
