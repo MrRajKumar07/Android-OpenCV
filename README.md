@@ -88,21 +88,3 @@ Make small focused commits. Push early & often.
 
 > Avoid single large commits. The grader expects to see progress.
 
----
-
-## What to include in your final README screenshots/GIFs
-
-* One GIF showing app running with camera -> processed edges rendered in GL
-* If GIF not possible, add at least 3 screenshots: (1) raw camera, (2) processed (edges), (3) web viewer displaying sample image
-
----
-
-## Need help? Next options I can do for you (pick any):
-
-* Generate the complete *repo skeleton* as a downloadable ZIP (with all skeleton files) ready to import.
-* Generate the full `native-lib.cpp`, `CMakeLists.txt`, and `app` Gradle configuration ready-to-build (best-effort — you may need to tweak OpenCV path).
-* Create a step-by-step terminal script to build the native libs and run on a device.
-
----
-
-Good luck — push often, and if you want I can produce the full file skeleton ZIP right now so you can import into Android Studio and begin implementation.
