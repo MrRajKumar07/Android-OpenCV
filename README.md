@@ -12,20 +12,6 @@ This project demonstrates:
 - Frame processing in **native C++** via **OpenCV** (e.g., Canny edge detection / grayscale).
 - Rendering the processed frame via **OpenGL ES 2.0**.
 - Exporting or previewing the processed frame in a **TypeScript-based web viewer**.
-  
-
-## ✅ Required Submission Checklist
-
-* [ ] Public (or shareable private) GitHub/GitLab repository with commit history
-* [ ] README.md (this file)
-* [ ] `/app` Android Java/Kotlin source
-* [ ] `/jni` C++ OpenCV code + `CMakeLists.txt`
-* [ ] `/gl` OpenGL renderer classes
-* [ ] `/web` TypeScript viewer (static sample image + stats)
-* [ ] Screenshots or GIFs of the working app
-* [ ] Clear commit history (see recommended commit plan below)
-
-**Deadline:** *31 October 2025, 10:30 AM IST* — ensure the repo is pushed before this time.
 
 ---
 
