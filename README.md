@@ -1,90 +1,159 @@
-# Android + OpenCV (C++) + OpenGL ES + Web
----
+# 🧪 Android + OpenCV-C++ + OpenGL + Web Assessment
 
-## ✅ Required Submission Checklist
-
-* [ ] Public (or shareable private) GitHub/GitLab repository with commit history
-* [ ] README.md (this file)
-* [ ] `/app` Android Java/Kotlin source
-* [ ] `/jni` C++ OpenCV code + `CMakeLists.txt`
-* [ ] `/gl` OpenGL renderer classes
-* [ ] `/web` TypeScript viewer (static sample image + stats)
-* [ ] Screenshots or GIFs of the working app
-* [ ] Clear commit history (see recommended commit plan below)
-
-**Deadline:** *31 October 2025, 10:30 AM IST* — ensure the repo is pushed before this time.
+### 🚀 Real-Time Edge Detection Viewer  
+A time-bound technical assessment integrating **Android Camera**, **OpenCV (C++)**, **OpenGL ES**, **JNI**, and a minimal **TypeScript Web Viewer**.
 
 ---
 
-## Features Implemented (Suggested for the README entry)
+## 📦 Project Overview
 
-* Camera capture using `TextureView` / `SurfaceTexture` (Camera2 recommended)
-* JNI bridge to native C++ (NDK + CMake)
-* OpenCV (C++) processing: Grayscale + Canny Edge Detection
-* Render processed frames using OpenGL ES 2.0 as a texture
-* Minimal TypeScript web viewer showing a static processed frame + FPS text overlay
-* Bonus: Toggle button (raw / processed) and FPS counter (optional)
-
----
-
-## Quick Architecture Explanation
-
-**High-level flow:**
-
-```
-Camera (SurfaceTexture) -> Java/Kotlin frame callback -> Mat (Java-side or direct native Mat) -> JNI -> native C++ (OpenCV) -> processed Mat -> upload to OpenGL texture -> GLSurfaceView renders texture
-```
-
-**Modules:**
-
-* `/app` — Android app (camera setup, JNI calls, UI controls, lifecycle)
-* `/jni` — native C++ code (OpenCV processing). Use `Mat` objects and JNI functions that accept `jlong` pointers to `cv::Mat`.
-* `/gl` — OpenGL ES 2.0 renderer, shader programs, texture upload helper.
-* `/web` — TypeScript + HTML viewer that displays a sample processed frame and a small stats overlay.
+This project demonstrates:
+- Real-time camera capture on Android using **Camera2 API**.
+- Frame processing in **native C++** via **OpenCV** (e.g., Canny edge detection / grayscale).
+- Rendering the processed frame via **OpenGL ES 2.0**.
+- Exporting or previewing the processed frame in a **TypeScript-based web viewer**.
 
 ---
 
-## Setup Instructions (short)
+## 🧱 Architecture Overview
 
-1. **Install prerequisites**
+```mermaid
+flowchart TD
+    A[Camera2 API] --> B[Java Frame Buffer]
+    B --> C[JNI Bridge]
+    C --> D[Native C++ - OpenCV Processing]
+    D --> E[OpenGL Renderer]
+    E --> F[Display in Android View]
+    D --> G[Exported Frame (PNG)]
+    G --> H[Web Viewer (TypeScript)]
+🧩 Folder Structure
+swift
+Copy code
+edge_assessment/
+├── app/
+│   ├── src/main/java/com/example/edgeviewer/
+│   │   └── MainActivity.java
+│   └── res/layout/
+│       └── activity_main.xml
+│
+├── jni/
+│   ├── CMakeLists.txt
+│   └── native-lib.cpp
+│
+├── gl/
+│   └── GLRenderer.java
+│
+├── web/
+│   ├── index.html
+│   ├── main.ts
+│   ├── tsconfig.json
+│   └── processed_sample.png
+│
+└── README.md
+⚙️ Setup Instructions
+🧰 Prerequisites
+Android Studio (latest)
 
-   * Android Studio (prefer latest stable)
-   * Android NDK (r23b or compatible)
-   * CMake (bundled with Android Studio or install separately)
-   * OpenCV Android SDK (download from opencv.org) — extract and reference `sdk/native/jni/include` and `sdk/native/libs` in `CMakeLists.txt`
+OpenCV Android SDK
 
-2. **Project-level**
+Android NDK + CMake
 
-   * Ensure `android.ndkVersion` in `build.gradle` matches installed NDK
-   * In `app/build.gradle` enable externalNativeBuild with CMake and point to `CMakeLists.txt`
+Node.js + TypeScript (npm install -g typescript)
 
-3. **Build & Run**
+🧩 Android Setup
+Clone the repository:
 
-   * Build in Android Studio (Gradle will invoke CMake to produce the `.so`)
-   * Grant camera permission on first run
+bash
+Copy code
+git clone https://github.com/yourusername/edge_assessment.git
+cd edge_assessment
+Open in Android Studio.
 
-4. **TypeScript Web Viewer**
+Configure NDK path in local.properties:
 
-   * `cd web && npm install` (if using dev dependencies)
-   * `npx tsc` (compile `main.ts` -> `main.js`)
-   * Open `index.html` in browser (static; no server needed)
+ini
+Copy code
+ndk.dir=/path/to/android-ndk
+sdk.dir=/path/to/android-sdk
+Copy OpenCV SDK to /OpenCV-android-sdk/ and link in CMakeLists.txt.
 
----
+Build and Run on a real device.
 
-## Recommended Commit Plan (example messages & cadence)
+🌐 Web Setup
+Navigate to the web folder:
 
-Make small focused commits. Push early & often.
+bash
+Copy code
+cd web
+npm install
+tsc
+Open index.html in a browser — displays a static processed frame with overlayed FPS/resolution.
 
-1. `chore: repo skeleton + README` — add top-level folders and README
-2. `feat: initial Android project (app module, activity)` — minimal MainActivity and gradle config
-3. `feat: camera capture (TextureView) + frame callback` — capture frame buffer, log frames
-4. `feat: add NDK integration + CMakeLists` — native-lib stub exported
-5. `feat: JNI bridge + OpenCV native processing (canny skeleton)` — static image test
-6. `feat: GL renderer skeleton (GLSurfaceView + GLRenderer)` — renders solid color
-7. `feat: connect processed Mat -> upload to GL texture` — show processed texture
-8. `feat: web viewer (TypeScript) + sample image` — basic viewer working
-9. `fix: performance tweaks (frame throttling, conversions)`
-10. `docs: add screenshots + final README updates`
+🧠 Architecture Explanation
+🔹 Frame Flow
+Camera2 API captures preview frames → SurfaceTexture.
 
-> Avoid single large commits. The grader expects to see progress.
+Java sends frames to native via JNI → native-lib.cpp.
 
+C++ uses OpenCV to perform edge detection (cv::Canny) or grayscale conversion.
+
+The processed frame is rendered back using OpenGL ES 2.0 as a texture.
+
+Optionally, the processed frame is saved as a PNG for the Web Viewer.
+
+🔹 JNI Communication
+Java calls:
+
+java
+Copy code
+processFrameJNI(long nativeObjAddr);
+Native implementation:
+
+cpp
+Copy code
+JNIEXPORT void JNICALL Java_com_example_edgeviewer_MainActivity_processFrameJNI
+(JNIEnv* env, jobject obj, jlong matAddr) {
+    cv::Mat& frame = *(cv::Mat*)matAddr;
+    cv::Canny(frame, frame, 80, 150);
+}
+🔹 OpenGL Renderer
+Uses GLSurfaceView to render processed textures.
+
+Frame data uploaded as texture via glTexImage2D.
+
+Simple fragment shader handles color mapping.
+
+🌐 Web Viewer Details
+Built using TypeScript + HTML5.
+
+Displays a sample processed image (processed_sample.png).
+
+FPS and resolution displayed via DOM updates.
+
+Example:
+
+typescript
+Copy code
+document.getElementById("fps")!.innerText = "FPS: 15";
+document.getElementById("resolution")!.innerText = "Resolution: 640x480";
+⭐️ Bonus Features (Optional)
+Toggle Button: Raw ↔ Processed frame
+
+FPS Counter (in Java via frame time logs)
+
+Grayscale / Invert shaders
+
+Mock WebSocket feed (send base64 frame to web)
+
+🧾 Commit History Guidelines
+Meaningful commits for each development step:
+
+bash
+Copy code
+git add .
+git commit -m "Initial Android project setup"
+git commit -m "Added JNI bridge and native-lib.cpp"
+git commit -m "Integrated OpenCV Canny edge detection"
+git commit -m "Added OpenGL texture rendering"
+git commit -m "Implemented TypeScript web viewer"
+git push origin main
